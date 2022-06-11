@@ -1,3 +1,4 @@
+import { SignInButton } from '../SignInButton';
 import styles from './styles.module.scss';
 
 function index() {
@@ -9,6 +10,7 @@ function index() {
           <a>Home</a>
           <a>Posts</a>
         </nav>
+        <SignInButton />
       </div>
     </header>
   );
