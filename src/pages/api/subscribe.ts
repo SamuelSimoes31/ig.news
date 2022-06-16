@@ -4,7 +4,8 @@ import { stripe } from '../../services/stripe';
 
 const subscribe = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-    const session = await getSession({ req });
+    try {
+      const session = await getSession({ req });
 
     const stripeCostumer = await stripe.customers.create({
       email: session.user.email,
@@ -17,7 +18,7 @@ const subscribe = async (req: NextApiRequest, res: NextApiResponse) => {
       billing_address_collection: 'required',
       line_items: [
         {
-          price: "price_1L9IyqIzabFWmxYY9MkomTR",
+          price: "price_1L9IyqIzabFWmxYY9MkomTRH",
           quantity: 1
         }
       ],
@@ -28,6 +29,9 @@ const subscribe = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     return res.status(200).json({ sessionId: stripeCheckoutSession.id });
+    } catch (error) {
+      return res.status(500).json({ error });
+    }
   } else {
     res.setHeader('Allow', 'POST');
     res.status(405).end(`Method ${req.method} Not Allowed`);
