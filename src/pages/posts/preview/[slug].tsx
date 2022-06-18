@@ -1,8 +1,10 @@
 import { PrismicRichText } from '@prismicio/react';
-import { GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { createClient } from '../../../services/prismicio';
 import styles from '../post.module.scss';
 
@@ -16,6 +18,15 @@ interface PostPreviewProps {
 }
 
 export default function PostPreview({ post }: PostPreviewProps) {
+  const { data } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (data?.activeSubscription) {
+      router.push(`/posts/${post.slug}`);
+    }
+  }, [data, post.slug, router]);
+
   return (
     <>
       <Head>
@@ -44,7 +55,7 @@ export default function PostPreview({ post }: PostPreviewProps) {
   );
 }
 
-export const getStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
     fallback: 'blocking'
@@ -74,6 +85,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       post
-    }
+    },
+    revalidate: 30 * 60
   };
 };
