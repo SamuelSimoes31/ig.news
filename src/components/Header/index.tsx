@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { SignInButton } from '../SignInButton';
 import styles from './styles.module.scss';
 
@@ -7,8 +8,12 @@ function index() {
       <div className={styles.headerContent}>
         <img src="/images/logo.svg" alt="ig.news" />
         <nav>
-          <a>Home</a>
-          <a>Posts</a>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+          <Link href="/posts" prefetch>
+            <a>Posts</a>
+          </Link>
         </nav>
         <SignInButton />
       </div>
