@@ -1,19 +1,20 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
+import ActiveLink from '../ActiveLink';
 import { SignInButton } from '../SignInButton';
 import styles from './styles.module.scss';
 
-function index() {
+function Header() {
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
         <img src="/images/logo.svg" alt="ig.news" />
         <nav>
-          <Link href="/">
+          <ActiveLink activeClassName={styles.active} href="/">
             <a>Home</a>
-          </Link>
-          <Link href="/posts" prefetch>
+          </ActiveLink>
+          <ActiveLink activeClassName={styles.active} href="/posts" prefetch>
             <a>Posts</a>
-          </Link>
+          </ActiveLink>
         </nav>
         <SignInButton />
       </div>
@@ -21,4 +22,4 @@ function index() {
   );
 }
 
-export default index;
+export default Header;
