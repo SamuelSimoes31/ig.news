@@ -15,7 +15,7 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
     if (status === 'unauthenticated') {
       signIn('github');
     } else if (status === 'authenticated') {
-      if(data.activeSubscription){
+      if(data?.activeSubscription){
         router.push('/posts');
       } else {
         try {
